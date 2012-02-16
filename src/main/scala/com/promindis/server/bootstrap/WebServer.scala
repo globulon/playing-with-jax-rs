@@ -1,25 +1,10 @@
 package com.promindis.server.bootstrap
 
-
-import javax.ws.rs.ext._
-import javax.xml.bind.JAXBContext
-
-import com.sun.jersey.api.json.{JSONConfiguration, JSONJAXBContext}
-
 import org.eclipse.jetty.server.{Server => JettyServer}
 import org.eclipse.jetty.servlet._
 import com.sun.jersey.spi.container.servlet.ServletContainer
 import com.sun.jersey.api.core.PackagesResourceConfig
 import ServletContextHandler._
-
-@Provider
-class JaxbContextResolver extends ContextResolver[JAXBContext] {
-  val paths = "com.promindis.resources"
-  val config = JSONConfiguration.mapped().rootUnwrapping(false).build()
-  val context = new JSONJAXBContext(config, paths)
-
-  def getContext(clazz: Class[_]) = context
-}
 
 object WebServer extends App {
 
