@@ -4,12 +4,12 @@ import javax.ws.rs.core.MediaType._
 import javax.ws.rs._
 
 
-@Path("books")
+@Path("/books")
 @Produces(Array(APPLICATION_XML, APPLICATION_JSON))
 @Consumes(Array(APPLICATION_XML, APPLICATION_JSON))
 class BookResource {
 
   @GET
-  def listOfBooks() = List(Book("Scala in depth"), Book("Scala in Action"))
+  def listOfBooks() = Array(Book("123", "Scala in depth"), Book("4,5,6","Scala in Action"))
 
 }
