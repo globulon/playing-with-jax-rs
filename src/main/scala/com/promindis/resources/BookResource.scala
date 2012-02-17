@@ -14,7 +14,6 @@ class BookResource {
   var uriInfo: UriInfo = _
 
   @GET
-  def listOfBooks() = Array(Book("123", "Scala in depth"), Book("4,5,6","Scala in Action"))
-
+  def listOfBooks() = Books(List(Book("123", "Scala in depth"), Book("456","Scala in Action")))
 
 }
