@@ -19,6 +19,8 @@ object Resolvers {
 
 
 object Versions {
+  val Neo4J = "1.6"
+  val Jaxrs = "1.1.1"
   val Jersey = "1.9.1"
   val Jetty  = "8.0.4.v20111024"
   val Specs2Version = "1.7.1"
@@ -26,8 +28,8 @@ object Versions {
 
 object SourceDependencies {
   import Versions._
-
-  lazy val jsr311       = "javax.ws.rs"       % "jsr311-api"      % "1.1.1" % "compile"
+  lazy val neo4j        = "org.neo4j"         % "neo4j"           % Neo4J   % "compile"
+  lazy val jsr311       = "javax.ws.rs"       % "jsr311-api"      % Jaxrs   % "compile"
   lazy val jerseyCore   = "com.sun.jersey"    % "jersey-core"     % Jersey  % "compile"
   lazy val jerseyJson   = "com.sun.jersey"    % "jersey-json"     % Jersey  % "compile"
   lazy val jerseyServer = "com.sun.jersey"    % "jersey-server"   % Jersey  % "compile"
@@ -55,9 +57,8 @@ object MainBuild extends Build {
     settings = buildSettings ++ Seq (
       resolvers            := Seq (typesafeReleases, scalaToolsRepo),
       libraryDependencies ++= Seq (jsr311, jerseyCore, jerseyJson, jerseyServer),
-      // container dependencies
       libraryDependencies ++= Seq (jettyServer, jettyServlet, jettyWebapp),
-      // runtime dependencies
+      libraryDependencies ++= Seq (neo4j),
       libraryDependencies ++= Seq (testDependencies)
     )
   )

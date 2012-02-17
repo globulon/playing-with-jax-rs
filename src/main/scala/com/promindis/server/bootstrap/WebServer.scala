@@ -3,19 +3,21 @@ package com.promindis.server.bootstrap
 import org.eclipse.jetty.server.{Server => JettyServer}
 import org.eclipse.jetty.servlet._
 import com.sun.jersey.spi.container.servlet.ServletContainer
-import com.sun.jersey.api.core.PackagesResourceConfig
 import ServletContextHandler._
+import com.sun.jersey.api.core.PackagesResourceConfig
 
-object WebServer extends App {
 
-  def properties: java.util.Map[String, AnyRef] = {
-    new java.util.HashMap[String, AnyRef] {
-      put("com.sun.jersey.config.property.packages", "com.promindis.server.bootstrap;com.promindis.resources")
-      put("com.sun.jersey.config.feature.Trace", "true")
-      put("com.sun.jersey.config.feature.Redirect", "true")
-      put("com.sun.jersey.config.feature.Formatted", "true")
-    }
-  }
+object Properties extends java.util.HashMap[String, AnyRef]  {
+  put("com.sun.jersey.config.property.packages", "com.promindis.server.bootstrap;com.promindis.server.resources")
+  put("com.sun.jersey.config.feature.Trace", "true")
+  put("com.sun.jersey.config.feature.Redirect", "true")
+  put("com.sun.jersey.config.feature.Formatted", "true")
+}
+
+object ApplicationConfig extends PackagesResourceConfig(Properties)
+
+object WebServer {
+
 
   implicit def onSteroids(contextHandler: ServletContextHandler) = new {
     def withContext(path: String) = {
@@ -50,11 +52,11 @@ object WebServer extends App {
     }
   }
 
-  def jerseyServlet = new ServletHolder(new ServletContainer(new PackagesResourceConfig(properties)))
+  def jerseyServlet = new ServletHolder(new ServletContainer(ApplicationConfig))
 
-  new JettyServer(7777)
-    .initialized{ _.withContext("/").holderFor(jerseyServlet, "/*")}
-      .boot()
+  def create =  new JettyServer(7777)
+                  .initialized{ _.withContext("/").holderFor(jerseyServlet, "/*")}
+                      .boot()
 
 }
 
