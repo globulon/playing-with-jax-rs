@@ -1,22 +1,21 @@
 package com.promindis.application
 
-import com.promindis.db.bootstrap.DbServer._
 
 import com.promindis.db.domain.SocialRelationships._
 import org.neo4j.kernel.EmbeddedGraphDatabase
-import org.neo4j.graphdb.index.{Index}
-import org.neo4j.graphdb.Node
 import com.promindis.db.domain.UserProperties._
 import com.promindis.db.domain.{UserRelationships, Property}
 import UserRelationships._
+import com.promindis.db.adatpers.DatabaseFactory._
+import com.promindis.db.adatpers.Database
 
 /**
  * Date: 17/02/12
  * Time: 21:49
  */
 
-object SayHello extends ((EmbeddedGraphDatabase) => Unit) {
-  def apply(instance: EmbeddedGraphDatabase) {
+object SayHello extends ((Database[EmbeddedGraphDatabase]) => Unit) {
+  def apply(instance: Database[EmbeddedGraphDatabase]) {
     val firstNode = instance.createNode()
     firstNode.setProperty("message", "Hello")
     val secondNode = instance.createNode()
@@ -31,35 +30,24 @@ object SayHello extends ((EmbeddedGraphDatabase) => Unit) {
   }
 }
 
-object PlayWithUsers extends ((EmbeddedGraphDatabase) => Unit) {
+object PlayWithUsers extends ((Database[EmbeddedGraphDatabase]) => Unit) {
 
-  def apply(instance: EmbeddedGraphDatabase) {
+  def apply(instance: Database[EmbeddedGraphDatabase]) {
     import Property._
 
     def namedFrom(id: Long) = "user" + id + "@neo4j"
 
-    def indexedUser[T <: Property](key: T, name: String)(implicit index: Index[Node], f: T => String) = {
-      val node = instance.createNode()
-      node.setProperty(key, name)
-      index.add(node, key, name)
-      node
-    }
-
-    def foundUser[T <: Property](key: T, searchedCriteria: Any)(implicit index: Index[Node], f: T => String): Any = {
-      index.get(key, searchedCriteria).getSingle
-    }
-
-    implicit val index = instance.index().forNodes("nodes")
+    implicit val index = instance.indexFor("nodes")
 
     val usersReference = instance.createNode()
-    instance.getReferenceNode.createRelationshipTo(usersReference, USER_REFERENCE)
+    instance.referenceNode.createRelationshipTo(usersReference, USER_REFERENCE)
 
     for (i <- 1L to 100L) {
-      usersReference.createRelationshipTo(indexedUser(USER_NAME, namedFrom(i)), USER)
+      usersReference.createRelationshipTo(instance.newIndexedNode(USER_NAME, namedFrom(i)), USER)
     }
 
     for (id <- 1L to 100L) {
-      println(foundUser(USER_NAME, namedFrom(id)))
+      println(instance.foundNode(USER_NAME, namedFrom(id)))
     }
 
   }
