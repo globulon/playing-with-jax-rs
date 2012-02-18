@@ -1,4 +1,4 @@
-package com.promindis.resources
+package com.promindis.server.resources
 
 import javax.xml.bind.annotation.adapters.XmlAdapter
 import scala.collection._

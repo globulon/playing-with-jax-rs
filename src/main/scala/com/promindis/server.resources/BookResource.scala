@@ -1,4 +1,4 @@
-package com.promindis.resources
+package com.promindis.server.resources
 
 import javax.ws.rs.core.MediaType._
 import javax.ws.rs._

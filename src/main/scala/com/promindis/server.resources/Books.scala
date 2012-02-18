@@ -1,8 +1,8 @@
-package com.promindis.resources
+package com.promindis.server.resources
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 import javax.xml.bind.annotation._
-import com.promindis.resources.Adapters.BookListToBookContainer
+import Adapters.BookListToBookContainer
 
 /**
  * Date: 17/02/12
