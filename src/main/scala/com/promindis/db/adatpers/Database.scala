@@ -34,5 +34,7 @@ case class Database[T <: GraphDatabaseService : DatabaseLifeCycleManager : Datab
 
   def createNode() = instance.createNode()
 
+  def createNode(f: Node => Node) = f(instance.createNode())
+
   def referenceNode = instance.getReferenceNode
 }

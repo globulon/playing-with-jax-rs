@@ -11,6 +11,12 @@ sealed trait Relationship extends RelationshipType {
   final override def name = toString
 }
 
+object MatrixRelationships {
+  sealed trait MatrixNetworkRelationship extends Relationship
+  case object THE_ONE extends MatrixNetworkRelationship
+  case object CODED_BY extends MatrixNetworkRelationship
+}
+
 object SocialRelationships {
   sealed trait SocialNetworkRelationship extends Relationship
   case object KNOWS extends SocialNetworkRelationship
