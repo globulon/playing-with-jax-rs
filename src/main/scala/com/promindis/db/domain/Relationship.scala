@@ -29,3 +29,13 @@ object UserRelationships {
 
 }
 
+object PetStoreRelationships {
+  sealed trait PetStoreRelationship extends Relationship
+  case object OWNERS extends PetStoreRelationship
+  case object OWNER extends PetStoreRelationship
+  case object OWNS extends PetStoreRelationship
+  case object PETS extends PetStoreRelationship
+  case object PET extends PetStoreRelationship
+  case object DESCENDANT extends PetStoreRelationship
+}
+

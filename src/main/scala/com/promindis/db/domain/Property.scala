@@ -25,3 +25,9 @@ object UserProperties {
   case object USER_RANK extends Property
 
 }
+
+object PetStoreProperties {
+
+  sealed trait PetStoreProperty extends Property
+  case object NAME extends Property
+}

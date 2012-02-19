@@ -2,7 +2,7 @@ package com.promindis.db.adatpers
 
 import com.promindis.db.adatpers.DatabaseTools.{DatabaseAccessor, DatabaseLifeCycleManager}
 import org.neo4j.graphdb.index.Index
-import org.neo4j.graphdb.{Node, GraphDatabaseService}
+import org.neo4j.graphdb.{RelationshipType, Node, GraphDatabaseService}
 
 /**
  * Date: 18/02/12
@@ -37,4 +37,7 @@ case class Database[T <: GraphDatabaseService : DatabaseLifeCycleManager : Datab
   def createNode(f: Node => Node) = f(instance.createNode())
 
   def referenceNode = instance.getReferenceNode
+
+  def references[T <: RelationshipType](n: Node, r: T) =
+    instance.getReferenceNode.createRelationshipTo(n, r)
 }

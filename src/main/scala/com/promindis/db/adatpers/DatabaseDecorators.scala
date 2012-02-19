@@ -35,7 +35,7 @@ final case class NodeOnSteroids(delegate: Node) {
     newNode
   }
 
-  def relatedTo[R <: RelationshipType](other: Node, withRelationType: R, f: Relationship => Unit = (_ => {})) = {
+  def relatesTo[R <: RelationshipType](other: Node, withRelationType: R, f: Relationship => Unit = (_ => {})) = {
     delegate.createRelationshipTo(other.delegate, withRelationType)
     this
   }
