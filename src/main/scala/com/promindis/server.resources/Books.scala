@@ -2,7 +2,7 @@ package com.promindis.server.resources
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 import javax.xml.bind.annotation._
-import Adapters.BookListToBookContainer
+import JAXBAdapters._
 
 /**
  * Date: 17/02/12
@@ -24,8 +24,8 @@ Books(list: List[Book]) {
 @XmlRootElement(name = "book")
 @XmlAccessorType(XmlAccessType.FIELD)
 case class Book(
-                 @XmlAttribute(required = true)isbn: String,
-                 @XmlAttribute(required = true)title: String
+                 @xmlAttribute(required = true)isbn: String,
+                 @xmlAttribute(required = true)title: String
                  ) {
   def this() = this (null, null)
 }

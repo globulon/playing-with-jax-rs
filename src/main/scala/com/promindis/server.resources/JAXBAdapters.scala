@@ -1,16 +1,21 @@
 package com.promindis.server.resources
 
-import javax.xml.bind.annotation.adapters.XmlAdapter
 import scala.collection._
 import java.util.{List => JList, ArrayList => AList}
 import javax.xml.bind.annotation._
+import adapters.{XmlJavaTypeAdapter, XmlAdapter}
+import annotation.target._
 
 /**
  * Date: 17/02/12
  * Time: 16:02
  */
 
-object Adapters {
+object JAXBAdapters {
+
+  type xmlElement = XmlElement @field
+  type xmlTypeAdapter = XmlJavaTypeAdapter @field
+  type xmlAttribute = XmlAttribute @field
 
   trait Container[T] {
     def items : JList[T]
@@ -40,4 +45,12 @@ object Adapters {
     def unmarshal(container: A) = container.items.asScala.toList
   }
 
+  case class StringOptionAdapter() extends OptionAdapter[String](null, "")
+
+  case class OptionAdapter[T](noneValues: T*) extends XmlAdapter[T, Option[T]]{
+
+    override def marshal(value: Option[T]) = value.getOrElse(noneValues(0))
+
+    override def unmarshal(value: T) = if (noneValues.contains(value)) None  else Some(value)
+  }
 }
