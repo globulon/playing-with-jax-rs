@@ -3,8 +3,7 @@ package com.promindis.application
 import com.promindis.server.resources.Person
 import javax.xml.bind.{SchemaOutputResolver, JAXBContext}
 import javax.xml.transform.stream.StreamResult
-import com.sun.org.apache.xml.internal.serializer.OutputPropertyUtils
-import java.io.{ByteArrayOutputStream, BufferedOutputStream, StringReader}
+import java.io.{ByteArrayOutputStream, StringReader}
 
 /**
  * Date: 23/02/12
