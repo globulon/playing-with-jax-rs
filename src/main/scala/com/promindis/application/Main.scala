@@ -13,13 +13,13 @@ object Main extends App {
 
   val db = createEmbeddedDb()
 
-//  db {SayHello}
-//
-//  db {PlayWithUsers}
-//
-//  db {MatrixTraversal}
-//
-//  db {MatrixTraversalNewGen}
+  db {SayHello}
+
+  db {PlayWithUsers}
+
+  db {MatrixTraversal}
+
+  db {MatrixTraversalNewGen}
 
   db {PetStore}
 
